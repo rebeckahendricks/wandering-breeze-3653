@@ -3,3 +3,11 @@
 <h4>Challenge Theme: <%= @challenge.theme %> </h4>
 <h4>Number of Contestants: <%= @project.contestant_count %></h4>
 <h4>Average Contestant Experience: <%= @project.avg_contestant_experience %> years</h4>
+
+<div id="add_contestant">
+<%= form_with url: "/projects/#{@project.id}", method: :patch, local: true do |f| %>
+  <%= f.label :add_contestant, "Enter Contestant ID:" %>
+  <%= f.number_field :add_contestant %>
+  <%= f.submit "Add Contestant" %>
+<% end %>
+</div>

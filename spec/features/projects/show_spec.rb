@@ -61,8 +61,8 @@ RSpec.describe 'Projects Show Page' do
         it 'I am taken back to the projects show page' do
           visit "/projects/#{@news_chic.id}"
 
-          fill_in 'Add Contestant', with: "#{@kentaro.id}"
-          click_on 'Add Contestant to Project'
+          fill_in :add_contestant, with: "#{@kentaro.id}"
+          click_on 'Add Contestant'
 
           expect(current_path).to eq("/projects/#{@news_chic.id}")
         end
@@ -71,14 +71,20 @@ RSpec.describe 'Projects Show Page' do
           visit "/projects/#{@news_chic.id}"
 
           expect(page).to have_content("Number of Contestants: 2")
-          fill_in 'Add Contestant', with: "#{@kentaro.id}"
-          click_on 'Add Contestant to Project'
+          fill_in :add_contestant, with: "#{@kentaro.id}"
+          click_on 'Add Contestant'
 
           expect(page).to have_content("Number of Contestants: 3")
         end
 
         describe 'And when I visit the contestants index page' do
           it 'I see that the project listed under that contestants name' do
+            visit "/projects/#{@news_chic.id}"
+
+            expect(page).to have_content("Number of Contestants: 2")
+            fill_in :add_contestant, with: "#{@kentaro.id}"
+            click_on 'Add Contestant'
+
             visit "/contestants"
 
             within("#contestant-#{@kentaro.id}") do
