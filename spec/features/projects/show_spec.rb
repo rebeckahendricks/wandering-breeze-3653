@@ -50,6 +50,43 @@ RSpec.describe 'Projects Show Page' do
 
         expect(page).to have_content("Average Contestant Experience: 12.5 years")
       end
+
+      it 'I see a form to add a contestant to this project' do
+        visit "/projects/#{@news_chic.id}"
+
+        expect(page).to have_selector("#add_contestant")
+      end
+
+      describe 'When I fill out a field with an existing contestants id and hit "Add Contestant To Project"' do
+        it 'I am taken back to the projects show page' do
+          visit "/projects/#{@news_chic.id}"
+
+          fill_in 'Add Contestant', with: "#{@kentaro.id}"
+          click_on 'Add Contestant to Project'
+
+          expect(current_path).to eq("/projects/#{@news_chic.id}")
+        end
+
+        it 'I see that the number of contestants has increased by 1' do
+          visit "/projects/#{@news_chic.id}"
+
+          expect(page).to have_content("Number of Contestants: 2")
+          fill_in 'Add Contestant', with: "#{@kentaro.id}"
+          click_on 'Add Contestant to Project'
+
+          expect(page).to have_content("Number of Contestants: 3")
+        end
+
+        describe 'And when I visit the contestants index page' do
+          it 'I see that the project listed under that contestants name' do
+            visit "/contestants"
+
+            within("#contestant-#{@kentaro.id}") do
+              expect(page).to have_content(@news_chic.name)
+            end
+          end
+        end
+      end
     end
   end
 end
