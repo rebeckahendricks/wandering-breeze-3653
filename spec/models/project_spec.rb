@@ -31,6 +31,12 @@ RSpec.describe Project, type: :model do
     end
   end
 
+  describe '#total_contestant_experience' do
+    it 'can calculate the total years of experience of the contestants on a project' do
+      expect(@news_chic.total_contestant_experience).to eq(25)
+    end
+  end
+
   describe '#avg_contestant_experience' do
     it 'can calculate the average years of experience of the contestants on a project' do
       expect(@news_chic.avg_contestant_experience).to eq(12.5)
