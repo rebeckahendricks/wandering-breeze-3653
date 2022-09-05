@@ -36,7 +36,7 @@ RSpec.describe 'Contestants Index page' do
         expect(page).to have_content(@erin.name)
       end
 
-      xit 'Under each contestants name I see a list of the projects(names) that theyve been on' do
+      it 'Under each contestants name I see a list of the projects(names) that theyve been on' do
         visit "/contestants"
 
         within("#contestant-#{@jay.id}") do
